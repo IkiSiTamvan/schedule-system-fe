@@ -1,13 +1,24 @@
 import "server-only";
+import { config as periods } from "./configs/academic-periods";
+import { config as majors } from "./configs/majors";
+import { config as subjects } from "./configs/subjects";
+import { config as teachers } from "./configs/teachers";
+import { config as classes } from "./configs/class-groups";
+import { config as facilities } from "./configs/facilities";
+import { config as rooms } from "./configs/rooms";
+import { config as slots } from "./configs/time-slots";
 import type { MasterConfig } from "./types";
-import { config as master0 } from "./configs/academic-periods";
-import { config as master1 } from "./configs/majors";
-import { config as master2 } from "./configs/subjects";
-import { config as master3 } from "./configs/teachers";
-import { config as master4 } from "./configs/class-groups";
-import { config as master5 } from "./configs/facilities";
-import { config as master6 } from "./configs/rooms";
-const masters: MasterConfig[] = [master0, master1, master2, master3, master4, master5, master6];
+
+const masters = [
+  periods,
+  majors,
+  subjects,
+  teachers,
+  classes,
+  facilities,
+  rooms,
+  slots,
+];
 export function masterConfig(slug: string): MasterConfig | undefined {
   return masters.find((config) => config.slug === slug);
 }
