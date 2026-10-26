@@ -1,0 +1,533 @@
+/* Container queries also respond to the simulated mobile device. */
+@container (max-width: 1130px) {
+  .workspace-content {
+    padding-left: 22px;
+    padding-right: 22px;
+  }
+  .app-topbar {
+    padding-left: 22px;
+    padding-right: 22px;
+  }
+  .teacher-preview-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 17px;
+  }
+  .stat-card {
+    padding: 13px;
+  }
+  .stat-label {
+    font-size: 11px;
+  }
+  .stat-icon {
+    width: 24px;
+    height: 24px;
+  }
+  .overview-columns {
+    grid-template-columns: minmax(0, 1.6fr) minmax(220px, 1fr);
+    gap: 13px;
+  }
+  .today-lesson {
+    gap: 8px;
+  }
+  .today-lesson > .badge {
+    display: none;
+  }
+  .section-heading {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .today-label {
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+  .today-lessons {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .setup-panel {
+    padding: 16px;
+  }
+  .lesson-break {
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+}
+@container (max-width: 940px) {
+  .academy-shell,
+  .theme-classic,
+  .theme-schedule {
+    grid-template-columns: 185px minmax(0, 1fr);
+  }
+  .sidebar-brand {
+    font-size: 23px;
+    padding-left: 8px;
+  }
+  .school-selector {
+    gap: 5px;
+    padding-left: 6px;
+  }
+  .school-selector strong {
+    font-size: 11px;
+  }
+  .school-selector small {
+    font-size: 9px;
+  }
+  .school-symbol {
+    width: 23px;
+  }
+  .overview-columns {
+    grid-template-columns: 1fr;
+  }
+  .setup-panel {
+    display: none;
+  }
+  .page-heading {
+    align-items: flex-start;
+  }
+  .page-heading > .button {
+    font-size: 11px;
+    padding: 8px;
+  }
+  .page-heading > .button > svg:last-child {
+    display: none;
+  }
+  .stat-grid {
+    gap: 8px;
+  }
+  .stat-label {
+    font-size: 10px;
+  }
+  .stat-value {
+    font-size: 27px;
+  }
+  .stat-value > span {
+    margin-left: 4px;
+    font-size: 9px;
+  }
+  .stat-card > p {
+    font-size: 9px;
+  }
+  .workspace-bottom > span:last-child {
+    display: none;
+  }
+}
+@container (max-width: 760px) {
+  .academy-shell,
+  .theme-classic,
+  .theme-schedule {
+    grid-template-columns: minmax(0, 1fr);
+    min-height: 780px;
+  }
+  .shell-sidebar {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 218px;
+    z-index: 30;
+    box-shadow: 8px 0 35px #263f5e20;
+  }
+  .shell-sidebar.sidebar-open {
+    display: flex;
+  }
+  .sidebar-backdrop {
+    display: block;
+    position: absolute;
+    inset: 0;
+    background: #18344d55;
+    z-index: 25;
+  }
+  .mobile-menu-toggle,
+  .mobile-nav-close {
+    display: inline-flex;
+  }
+  .sidebar-brand .mobile-nav-close {
+    margin-left: auto;
+    width: 22px;
+  }
+  .theme-classic .sidebar-brand .mobile-nav-close {
+    color: white;
+  }
+  .theme-schedule .sidebar-brand .mobile-nav-close {
+    color: #6b8086;
+  }
+  .desktop-panel-icon {
+    display: none;
+  }
+  .app-topbar {
+    height: 58px;
+    padding: 0 17px;
+  }
+  .breadcrumbs {
+    gap: 8px;
+  }
+  .workspace-content {
+    padding: 22px 20px 0;
+  }
+  .stat-grid {
+    gap: 10px;
+  }
+  .stat-label {
+    font-size: 12px;
+  }
+  .stat-value {
+    font-size: 31px;
+  }
+  .page-heading h1,
+  .theme-schedule .page-heading h1 {
+    font-size: 26px;
+  }
+  .stat-card > p {
+    font-size: 10px;
+  }
+  .today-lesson {
+    gap: 12px;
+  }
+  .today-lesson > .badge {
+    display: inline-flex;
+  }
+  .sidebar-bottom {
+    padding-top: 40px;
+  }
+}
+@container (max-width: 540px) {
+  .workspace-content {
+    padding: 20px 16px 0;
+  }
+  .topbar-right {
+    gap: 10px;
+  }
+  .workspace-context {
+    margin-bottom: 22px;
+    gap: 8px;
+  }
+  .workspace-context > span {
+    font-size: 9px;
+    letter-spacing: 0.8px;
+  }
+  .period-selector {
+    gap: 4px;
+    font-size: 10px;
+  }
+  .period-selector > svg {
+    width: 11px;
+  }
+  .page-heading {
+    display: block;
+    margin-bottom: 21px;
+  }
+  .page-heading > .button,
+  .page-heading > .badge {
+    margin-top: 15px;
+  }
+  .page-heading h1,
+  .theme-schedule .page-heading h1 {
+    font-size: 25px;
+  }
+  .page-heading > div > p:last-child {
+    font-size: 12px;
+    line-height: 1.7;
+    max-width: 310px;
+  }
+  .greeting-sun {
+    font-size: 19px;
+    margin-left: 3px;
+  }
+  .stat-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-bottom: 20px;
+  }
+  .stat-card {
+    padding: 14px;
+  }
+  .stat-value {
+    font-size: 29px;
+  }
+  .stat-label {
+    font-size: 12px;
+  }
+  .stat-value > span {
+    font-size: 10px;
+  }
+  .overview-columns {
+    margin-bottom: 20px;
+  }
+  .teacher-preview-grid {
+    padding: 2px 16px 19px;
+    gap: 18px 9px;
+  }
+  .teacher-preview {
+    gap: 7px;
+  }
+  .teacher-preview .avatar {
+    width: 28px;
+    height: 28px;
+    font-size: 10px;
+  }
+  .teacher-preview > svg {
+    display: none;
+  }
+  .teacher-preview strong {
+    font-size: 10px;
+  }
+  .teacher-preview small {
+    font-size: 9px;
+  }
+  .section-heading h2 {
+    font-size: 14px;
+  }
+  .section-heading .text-link {
+    font-size: 10px;
+  }
+  .lesson-summary h3 {
+    font-size: 13px;
+  }
+  .lesson-summary > p {
+    font-size: 9px;
+  }
+  .today-lesson {
+    gap: 9px;
+  }
+  .lesson-kicker {
+    font-size: 9px;
+  }
+  .lesson-break {
+    padding-left: 43px;
+  }
+  .lesson-break > span:last-child {
+    display: none;
+  }
+  .today-lesson > .badge {
+    display: none;
+  }
+  .table-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 13px;
+  }
+  .filter-select {
+    align-self: flex-end;
+    padding: 6px 9px;
+  }
+  .search-input {
+    max-width: none;
+  }
+  .table-demo-note {
+    display: none;
+  }
+  .table-footer {
+    font-size: 10px;
+    padding: 14px;
+  }
+  .info-note {
+    padding: 13px;
+    align-items: flex-start;
+  }
+  .info-note p {
+    font-size: 10px;
+  }
+  .timetable-toolbar {
+    padding: 15px 13px;
+  }
+  .class-context small {
+    max-width: 150px;
+    font-size: 9px;
+    line-height: 1.5;
+  }
+  .class-icon {
+    width: 28px;
+    height: 30px;
+  }
+  .class-context {
+    gap: 7px;
+  }
+  .calendar-mode button {
+    padding: 6px 7px;
+    font-size: 10px;
+  }
+  .calendar-period-bar {
+    padding: 12px 9px;
+    gap: 3px;
+  }
+  .calendar-date-controls {
+    gap: 0;
+  }
+  .calendar-date-controls strong {
+    font-size: 11px;
+  }
+  .calendar-date-controls .icon-button {
+    width: 22px;
+  }
+  .calendar-period-bar > .button {
+    font-size: 10px;
+    padding: 7px;
+  }
+  .calendar-footer {
+    font-size: 9px;
+    padding: 11px;
+  }
+  .calendar-footer > span:last-child {
+    display: none;
+  }
+  .day-tabs {
+    padding: 9px;
+    justify-content: space-between;
+    gap: 0;
+  }
+  .day-tabs button {
+    padding: 6px 8px;
+    font-size: 10px;
+  }
+}
+@media (max-width: 1000px) {
+  .explorer-masthead {
+    padding: 0 24px;
+  }
+  .explorer-main {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+  .design-option {
+    padding: 12px;
+    gap: 9px;
+  }
+  .option-name {
+    font-size: 12px;
+  }
+  .recommended {
+    display: none;
+  }
+  .design-thumbnail {
+    width: 44px;
+    height: 36px;
+  }
+  .option-description {
+    font-size: 10px;
+  }
+  .option-check {
+    width: 14px;
+    height: 14px;
+  }
+}
+@media (max-width: 680px) {
+  .explorer-masthead {
+    height: 66px;
+    padding: 0 18px;
+  }
+  .explorer-brand {
+    font-size: 22px;
+    gap: 7px;
+  }
+  .brand-divider {
+    margin: 0 4px 0 8px;
+  }
+  .masthead-label {
+    font-size: 12px;
+  }
+  .prototype-label {
+    font-size: 11px;
+  }
+  .prototype-label-extra {
+    display: none;
+  }
+  .explorer-main {
+    padding: 28px 16px 20px;
+  }
+  .explorer-intro {
+    margin-bottom: 22px;
+  }
+  .explorer-intro h1 {
+    max-width: 320px;
+    font-size: 28px;
+    line-height: 1.35;
+    letter-spacing: -0.9px;
+  }
+  .explorer-intro > div > p:last-child {
+    max-width: 315px;
+    font-size: 13px;
+  }
+  .intro-hint {
+    display: none;
+  }
+  .eyebrow {
+    font-size: 10px;
+  }
+  .design-options {
+    gap: 8px;
+  }
+  .design-option {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px;
+    position: relative;
+    gap: 10px;
+  }
+  .design-thumbnail {
+    width: 45px;
+    height: 33px;
+  }
+  .option-name {
+    font-size: 12px;
+    line-height: 1.5;
+    gap: 5px;
+  }
+  .option-name > span:first-child {
+    display: none;
+  }
+  .option-description {
+    font-size: 10px;
+    line-height: 1.6;
+    min-height: 25px;
+  }
+  .option-check {
+    position: absolute;
+    top: 11px;
+    right: 9px;
+  }
+  .preview-utility {
+    padding-top: 20px;
+  }
+  .preview-utility-description,
+  .utility-divider {
+    display: none;
+  }
+  .device-switch button {
+    padding: 5px 7px;
+  }
+  .device-switch button > span {
+    display: none;
+  }
+  .preview-footer {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 18px;
+    padding: 20px 3px 0;
+  }
+  .preview-footer > div {
+    align-items: flex-start;
+  }
+  .preview-footer p {
+    font-size: 12px;
+  }
+  .preview-footer > .button {
+    align-self: flex-end;
+  }
+  .stage-mobile {
+    padding: 15px 7px;
+  }
+  .device-mobile {
+    border-width: 4px;
+    border-radius: 22px;
+  }
+  .demo-footnote {
+    font-size: 10px;
+    padding: 22px 10px 0;
+  }
+  .toast {
+    width: calc(100vw - 32px);
+    font-size: 13px;
+    padding: 13px 16px;
+  }
+}
