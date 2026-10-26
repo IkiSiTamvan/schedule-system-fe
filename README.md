@@ -1,6 +1,6 @@
 ﻿# Academy frontend
 
-Next.js App Router frontend using the selected **B / minimal modern** design, connected to Spring Boot for real login, school selection/creation, and the first master: **tahun ajaran**.
+Next.js App Router frontend using the selected **B / minimal modern** design, connected to Spring Boot for login, school selection/creation, and nine academic master screens.
 
 ## Run locally
 
@@ -35,7 +35,13 @@ Open http://localhost:3000. Login, choose/create a school, then manage academic 
 - Delete an inactive, unused year after confirmation. Active/referenced years are protected.
 - School admins/schedulers can write; teachers/viewers see a read-only interface. Backend authorization applies to every request.
 
-Academic periods, teachers, subjects, and timetable workflows are not integrated yet. The separate `/preview` design explorer retains illustrative data for A/B/C comparison.
+## Academic masters
+
+The sidebar provides year, period/semester, major, subject, teacher, class group, facility, room, and time-slot management. Every screen supports real CRUD, search, pagination, validation, school isolation, and role-based actions. Periods/classes/slots filter by year; classes also filter by major; teachers by active status; slots by day.
+
+Create a year and major before a class. Period dates must fit within their year. Rooms can select multiple school facilities using checkboxes. Time slots derive duration from start/end times and reject overlap in the same year/day. Referenced records are protected against deletion and incompatible relationship changes.
+
+Teacher qualifications, availability, class subject requirements, and timetable generation remain future work. The separate `/preview` design explorer retains illustrative data for A/B/C comparison.
 
 ## Structure
 
@@ -45,6 +51,9 @@ src/components/auth/           Login form
 src/components/schools/        School creation
 src/components/workspace/      Minimal modern application shell
 src/components/academic-years/ List and create/edit/delete dialogs
+src/components/masters/        Shared server page, table, controlled form and delete dialog
+src/lib/masters/configs/        One typed field/column configuration per master
+src/lib/masters/registry.ts     Server-only action allowlist
 src/components/ui/             Shared UI primitives
 src/lib/backend.ts             Server-only API client and identity lookups
 src/lib/actions/               Validated server actions
@@ -54,7 +63,7 @@ src/components/preview/        Separate mock explorer
 src/styles/application.css     Live application styling
 ```
 
-Server pages fetch private records without caching. Client components handle dialogs/navigation; mutations run in server actions. CSS variables, responsive layouts, and Lucide icons keep components reusable. Fonts have system fallbacks.
+Server pages fetch private records without caching. Client components handle dialogs/navigation; mutations run in server actions. Actions resolve a server-owned config allowlist, verify school access, validate fields, then call the authorized backend. Form values survive validation errors. Lookups paginate all available records rather than truncating choices. CSS variables, responsive layouts, and Lucide icons keep components reusable. Fonts have system fallbacks.
 
 ## Validate
 

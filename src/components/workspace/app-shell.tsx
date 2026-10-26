@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
 import {
   ArrowUpRight,
@@ -12,6 +13,14 @@ import {
   PanelLeftClose,
   School as SchoolIcon,
   X,
+  BookOpen,
+  Users,
+  Building2,
+  Boxes,
+  Clock3,
+  Layers3,
+  Network,
+  School2,
 } from "lucide-react";
 import type { CurrentUser, School } from "@/lib/api-types";
 import { roleLabel } from "@/lib/api-types";
@@ -28,6 +37,19 @@ export function AppShell({
   children: ReactNode;
 }) {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+  const navigation = [
+    { slug: "academic-years", label: "Tahun ajaran", icon: CalendarDays },
+    { slug: "academic-periods", label: "Periode / semester", icon: Layers3 },
+    { slug: "majors", label: "Jurusan", icon: Network },
+    { slug: "subjects", label: "Mata pelajaran", icon: BookOpen },
+    { slug: "teachers", label: "Guru", icon: Users },
+    { slug: "class-groups", label: "Kelas / rombel", icon: School2 },
+    { slug: "facilities", label: "Fasilitas", icon: Boxes },
+    { slug: "rooms", label: "Ruangan", icon: Building2 },
+    { slug: "time-slots", label: "Slot waktu", icon: Clock3 },
+  ];
+  const current = navigation.find((item) => pathname.endsWith(`/${item.slug}`));
   useEffect(() => {
     const close = (event: KeyboardEvent) => {
       if (event.key === "Escape") setOpen(false);
@@ -72,14 +94,17 @@ export function AppShell({
           </Link>
           <p className="nav-label live-nav-label">MASTER AKADEMIK</p>
           <nav className="app-navigation" aria-label="Navigasi aplikasi">
-            <Link
-              href={`/schools/${school.id}/academic-years`}
-              aria-current="page"
-              onClick={() => setOpen(false)}
-            >
-              <CalendarDays size={19} />
-              <span>Tahun ajaran</span>
-            </Link>
+            {navigation.map((item) => (
+              <Link
+                key={item.slug}
+                href={`/schools/${school.id}/${item.slug}`}
+                aria-current={current?.slug === item.slug ? "page" : undefined}
+                onClick={() => setOpen(false)}
+              >
+                <item.icon size={19} />
+                <span>{item.label}</span>
+              </Link>
+            ))}
           </nav>
           <div className="sidebar-bottom">
             <div className="sidebar-note">
@@ -126,7 +151,7 @@ export function AppShell({
                 Sekolah
               </Link>
               <ChevronRight size={13} />
-              <strong>Tahun ajaran</strong>
+              <strong>{current?.label ?? "Master akademik"}</strong>
             </div>
             <div className="topbar-right">
               <span className="live-connection">
@@ -137,8 +162,11 @@ export function AppShell({
               <Avatar initials={initials} color="sand" small />
             </div>
           </header>
-          <main className="workspace-content live-content">
-            <a href="#academic-year-content" className="skip-link">
+          <main
+            className="workspace-content live-content"
+            id="workspace-content"
+          >
+            <a href="#workspace-content" className="skip-link">
               Lewati ke konten
             </a>
             {children}
