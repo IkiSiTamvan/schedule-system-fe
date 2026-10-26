@@ -1,0 +1,82 @@
+import type { MasterConfig } from "@/lib/masters/types";
+
+export const config: MasterConfig = {
+  slug: "class-groups",
+  title: "Kelas / rombel",
+  singular: "kelas",
+  description:
+    "Susun rombongan belajar sesuai jurusan dan tahun ajaran sekolah.",
+  endpoint: "/v1/class-groups",
+  fields: [
+    {
+      name: "academicYearId",
+      label: "Tahun ajaran",
+      type: "select",
+      required: true,
+      lookup: { endpoint: "/v1/academic-years" },
+    },
+    {
+      name: "majorId",
+      label: "Jurusan",
+      type: "select",
+      required: true,
+      lookup: { endpoint: "/v1/majors" },
+    },
+    {
+      name: "code",
+      label: "Kode kelas",
+      type: "text",
+      required: true,
+      maxLength: 30,
+    },
+    {
+      name: "name",
+      label: "Nama kelas",
+      type: "text",
+      required: true,
+      maxLength: 100,
+    },
+    {
+      name: "gradeLevel",
+      label: "Tingkat kelas",
+      type: "number",
+      required: true,
+      min: 1,
+      max: 13,
+      description: "Tingkat 1–13, termasuk SMK dengan program empat tahun.",
+    },
+    {
+      name: "cohortYear",
+      label: "Tahun angkatan",
+      type: "number",
+      required: true,
+      min: 1900,
+      max: 2200,
+    },
+    {
+      name: "section",
+      label: "Rombel",
+      type: "text",
+      required: true,
+      maxLength: 20,
+      description: "Contoh: 1, 2, atau A.",
+    },
+    {
+      name: "capacity",
+      label: "Kapasitas siswa",
+      type: "number",
+      min: 1,
+      max: 2147483647,
+    },
+  ],
+  columns: [
+    { key: "name", label: "Kelas" },
+    { key: "code", label: "Kode" },
+    { key: "academicYearName", label: "Tahun ajaran" },
+    { key: "majorName", label: "Jurusan" },
+    { key: "gradeLevel", label: "Tingkat" },
+    { key: "cohortYear", label: "Angkatan" },
+    { key: "section", label: "Rombel" },
+    { key: "capacity", label: "Kapasitas" },
+  ],
+};
