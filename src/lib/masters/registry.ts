@@ -5,7 +5,8 @@ import { config as master1 } from "./configs/majors";
 import { config as master2 } from "./configs/subjects";
 import { config as master3 } from "./configs/teachers";
 import { config as master4 } from "./configs/class-groups";
-const masters: MasterConfig[] = [master0, master1, master2, master3, master4];
+import { config as master5 } from "./configs/facilities";
+const masters: MasterConfig[] = [master0, master1, master2, master3, master4, master5];
 export function masterConfig(slug: string): MasterConfig | undefined {
   return masters.find((config) => config.slug === slug);
 }
