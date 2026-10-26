@@ -347,9 +347,108 @@
   padding: 11px 14px;
   margin: 4px 0;
   border-radius: 7px;
+  color: #69768a;
+  background: transparent;
+  font-size: 12px;
+}
+.live-workspace .app-navigation a[aria-current="page"] {
   color: var(--sidebar-active-text);
   background: var(--sidebar-active);
+}
+.live-workspace .app-navigation a:hover {
+  background: #f2f5fa;
+}
+.live-workspace .shell-sidebar {
+  height: 100dvh;
+  position: sticky;
+  top: 0;
+  overflow-y: auto;
+}
+.live-workspace .sidebar-note {
+  display: none;
+}
+.master-filters {
+  flex-wrap: wrap;
+}
+.master-filters .year-search {
+  min-width: min(260px, 100%);
+}
+.master-filters select {
+  max-width: 240px;
+}
+.master-dialog {
+  max-height: calc(100dvh - 40px);
+  overflow-y: auto;
+}
+.master-fields select {
+  min-width: 0;
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #e0e5dc;
+  border-radius: 8px;
+  color: #414d37;
+  background: white;
+}
+.master-fields select[multiple] {
+  min-height: 130px;
+}
+.master-field-hint {
+  font-weight: 400;
+  color: #687461;
+  line-height: 1.7;
+}
+.master-multiselect {
+  grid-column: 1 / -1;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+.master-multiselect legend {
+  padding: 0;
+  margin-bottom: 10px;
   font-size: 12px;
+  font-weight: 500;
+}
+.master-multiselect > div {
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid #e0e5dc;
+  border-radius: 8px;
+  max-height: 180px;
+  overflow-y: auto;
+}
+.master-multiselect label {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.master-multiselect input {
+  width: 16px;
+  height: 16px;
+  accent-color: #3869e8;
+}
+.master-prerequisite {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  background: #f0f4e9;
+  border: 1px solid #dce5d0;
+  border-radius: 8px;
+  padding: 16px;
+  color: #5c6d4b;
+  margin-bottom: 20px;
+  line-height: 1.7;
+}
+.master-prerequisite a {
+  display: inline-flex;
+  align-items: center;
+  font-weight: 600;
+  margin-left: auto;
 }
 .live-connection {
   display: flex;
@@ -767,7 +866,7 @@ button:disabled {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
-@media (max-width: 700px) {
+@media (max-width: 760px) {
   .login-page {
     grid-template-columns: 1fr;
   }
