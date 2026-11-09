@@ -28,6 +28,14 @@ export async function saveMaster(
   const fieldErrors: Record<string, string> = {};
   for (const field of config.fields) {
     const raw = String(formData.get(field.name) ?? "").trim();
+    if (
+      slug === "time-slots" &&
+      field.name === "endsAt" &&
+      formData.get("kind") === "LESSON"
+    ) {
+      body.endsAt = null;
+      continue;
+    }
     if (field.type === "checkbox") {
       body[field.name] = raw === "on";
       continue;

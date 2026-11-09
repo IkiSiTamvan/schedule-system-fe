@@ -15,6 +15,7 @@ async function lookupOptions(
   schoolId: number,
   labelKey = "name",
   valueKey = "id",
+  labelKeys?: string[],
 ) {
   const options = [];
   for (let page = 0; ; page++) {
@@ -27,7 +28,18 @@ async function lookupOptions(
     options.push(
       ...response.result.map((row) => ({
         value: String(row[valueKey]),
-        label: String(row[labelKey] ?? row.code ?? row.id),
+        ...(typeof row.lessonDurationMinutes === "number"
+          ? { lessonDurationMinutes: row.lessonDurationMinutes }
+          : {}),
+        label: labelKeys
+          ? labelKeys
+              .map((key) => row[key])
+              .filter(
+                (value) =>
+                  value !== null && value !== undefined && value !== "",
+              )
+              .join(" · ")
+          : String(row[labelKey] ?? row.code ?? row.id),
       })),
     );
     if (page + 1 >= (response.metaData?.pageCount ?? 1)) break;
@@ -86,6 +98,7 @@ export async function MasterPage({
                   school.id,
                   field.lookup.labelKey,
                   field.lookup.valueKey,
+                  field.lookup.labelKeys,
                 ),
               }
             : field,

@@ -153,6 +153,7 @@ export function AcademicYearList({
                 <tr>
                   <th>Tahun ajaran</th>
                   <th>Rentang tanggal</th>
+                  <th>Durasi 1 JP</th>
                   <th>Status</th>
                   {canManage && <th className="align-right">Aksi</th>}
                 </tr>
@@ -169,6 +170,7 @@ export function AcademicYearList({
                       <span className="date-separator">→</span>
                       {date(year.endsOn)}
                     </td>
+                    <td>{year.lessonDurationMinutes} menit</td>
                     <td>
                       <span
                         className={`year-status ${year.active ? "is-active" : ""}`}
@@ -312,6 +314,7 @@ function YearDialog({
     name: year?.name ?? "",
     startsOn: year?.startsOn ?? "",
     endsOn: year?.endsOn ?? "",
+    lessonDurationMinutes: String(year?.lessonDurationMinutes ?? 45),
   });
   const [isActive, setIsActive] = useState(year?.active ?? false);
   const [state, action, pending] = useActionState(
@@ -420,6 +423,35 @@ function YearDialog({
               )}
             </label>
           ))}
+          <label htmlFor="lessonDurationMinutes">
+            Durasi 1 JP (menit)
+            <input
+              id="lessonDurationMinutes"
+              name="lessonDurationMinutes"
+              type="number"
+              min={1}
+              max={240}
+              required
+              value={values.lessonDurationMinutes}
+              onChange={(event) =>
+                setValues((previous) => ({
+                  ...previous,
+                  lessonDurationMinutes: event.target.value,
+                }))
+              }
+              aria-invalid={!!state.fieldErrors?.lessonDurationMinutes}
+              aria-describedby="lesson-duration-hint"
+            />
+            <small id="lesson-duration-hint">
+              Default untuk slot pelajaran baru. Slot yang sudah dibuat tetap
+              memakai waktunya.
+            </small>
+            {state.fieldErrors?.lessonDurationMinutes && (
+              <span className="field-error">
+                {state.fieldErrors.lessonDurationMinutes}
+              </span>
+            )}
+          </label>
           <label className="active-checkbox">
             <input
               type="checkbox"

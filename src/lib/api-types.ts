@@ -24,6 +24,7 @@ export type School = {
   timeZone: string;
 };
 export type AcademicYear = {
+  lessonDurationMinutes: number;
   id: number;
   code: string;
   name: string;

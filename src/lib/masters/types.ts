@@ -1,4 +1,8 @@
-export type MasterOption = { value: string; label: string };
+export type MasterOption = {
+  value: string;
+  label: string;
+  lessonDurationMinutes?: number;
+};
 export type MasterField = {
   name: string;
   label: string;
@@ -20,7 +24,12 @@ export type MasterField = {
   defaultValue?: string | number | boolean;
   description?: string;
   options?: MasterOption[];
-  lookup?: { endpoint: string; labelKey?: string; valueKey?: string };
+  lookup?: {
+    endpoint: string;
+    labelKey?: string;
+    labelKeys?: string[];
+    valueKey?: string;
+  };
 };
 export type MasterConfig = {
   slug: string;

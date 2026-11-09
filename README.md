@@ -28,7 +28,7 @@ Open http://localhost:3000. Login, choose/create a school, then manage academic 
 
 ## First master
 
-- Create/edit a year with code, name, dates, and optional active status.
+- Create/edit a year with code, name, dates, duration of one JP in minutes (default 45), and optional active status.
 - Search code/name, filter status, and paginate backend records.
 - Activate another year to automatically deactivate the previous one.
 - Duplicate codes and invalid dates show errors while preserving values.
@@ -39,9 +39,11 @@ Open http://localhost:3000. Login, choose/create a school, then manage academic 
 
 The sidebar provides year, period/semester, major, subject, teacher, class group, facility, room, and time-slot management. Every screen supports real CRUD, search, pagination, validation, school isolation, and role-based actions. Periods/classes/slots filter by year; classes also filter by major; teachers by active status; slots by day.
 
-Create a year and major before a class. Period dates must fit within their year. Rooms can select multiple school facilities using checkboxes. Time slots derive duration from start/end times and reject overlap in the same year/day. Referenced records are protected against deletion and incompatible relationship changes.
+Create a year and major before a class. Period dates must fit within their year. Rooms can select multiple school facilities using checkboxes. The main **Slot waktu** screen selects one year/day and loads all its slots. Set the first start once; subsequent slots automatically continue from the previous end and sequence + 1. Add lesson JP using the year's duration, or breaks/activities by minutes. Drag the handle (pointer/touch), use arrow keys, or use the up/down buttons to reorder. Review the preview and click **Simpan susunan**; **Batal** restores the loaded plan. Names and non-lesson durations can be edited, and removals remain a draft until saved. All saves renumber the remaining slots and close gaps. Referenced slots cannot be moved or deleted. Revision checks reject stale tabs without overwriting newer changes. The advanced CRUD table is available through `?view=table`. Referenced records are protected against deletion and incompatible relationship changes.
 
-Teacher qualifications, availability, class subject requirements, and timetable generation remain future work. The separate `/preview` design explorer retains illustrative data for A/B/C comparison.
+The **Kebutuhan mapel** page configures a class/semester/subject and one positive **Target JP per minggu**. For example, enter 3 JP/week; scheduling can later place this as 3 JP together or 2 JP + 1 JP. JP targets belong to each class/semester requirement so the same subject can be reused with different targets. Filter by class, semester, or subject; search also matches class/major names. Dropdowns show the academic year to distinguish classes and semesters. The backend rejects mismatched years, duplicates, cross-school records, and changes/deletions to requirements used by schedules. Empty prerequisites link to the relevant master, and read-only roles cannot mutate data. Migration V15 converts previous meeting rows to their weekly total, preserving existing records. A fulfillment view per schedule version will be added with scheduling.
+
+Teacher qualifications, availability, annual curriculum templates, project/PKL blocks, and timetable generation remain future work. The separate `/preview` design explorer retains illustrative data for A/B/C comparison.
 
 ## Structure
 

@@ -5,7 +5,7 @@ export const config: MasterConfig = {
   title: "Slot waktu",
   singular: "slot waktu",
   description:
-    "Atur jam pelajaran, istirahat, dan kegiatan pada setiap hari sekolah.",
+    "Slot pelajaran mengikuti durasi 1 JP pada tahun ajaran. Buat beberapa JP sekaligus, atau atur istirahat dan kegiatan secara terpisah.",
   endpoint: "/v1/time-slots",
   fields: [
     {
@@ -49,15 +49,6 @@ export const config: MasterConfig = {
       required: true,
       maxLength: 100,
     },
-    { name: "startsAt", label: "Jam mulai", type: "time", required: true },
-    {
-      name: "endsAt",
-      label: "Jam selesai",
-      type: "time",
-      required: true,
-      description:
-        "Harus setelah jam mulai pada hari yang sama. Durasi dihitung otomatis dalam menit.",
-    },
     {
       name: "kind",
       label: "Jenis slot",
@@ -70,6 +61,15 @@ export const config: MasterConfig = {
         { value: "ACTIVITY", label: "Kegiatan" },
         { value: "OTHER", label: "Lainnya" },
       ],
+    },
+    { name: "startsAt", label: "Jam mulai", type: "time", required: true },
+    {
+      name: "endsAt",
+      label: "Jam selesai",
+      type: "time",
+      required: true,
+      description:
+        "Harus setelah jam mulai pada hari yang sama. Durasi dihitung otomatis dalam menit.",
     },
   ],
   columns: [

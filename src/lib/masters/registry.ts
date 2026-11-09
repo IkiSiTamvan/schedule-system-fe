@@ -7,6 +7,7 @@ import { config as classes } from "./configs/class-groups";
 import { config as facilities } from "./configs/facilities";
 import { config as rooms } from "./configs/rooms";
 import { config as slots } from "./configs/time-slots";
+import { config as requirements } from "./configs/class-subject-requirements";
 import type { MasterConfig } from "./types";
 
 const masters = [
@@ -18,6 +19,7 @@ const masters = [
   facilities,
   rooms,
   slots,
+  requirements,
 ];
 export function masterConfig(slug: string): MasterConfig | undefined {
   return masters.find((config) => config.slug === slug);

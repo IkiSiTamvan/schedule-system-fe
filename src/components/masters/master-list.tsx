@@ -1,6 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import { lessonEnd } from "@/lib/lesson-time";
+import { LessonSlotGenerator } from "./lesson-slot-generator";
 import { useActionState, useEffect, useRef, useState } from "react";
 import {
   Check,
@@ -15,6 +17,15 @@ import {
 } from "lucide-react";
 import { saveMaster, deleteMaster } from "@/lib/actions/masters";
 import type { MasterConfig, MasterRecord } from "@/lib/masters/types";
+
+function recordLabel(row: MasterRecord) {
+  return String(
+    row.name ??
+      (row.classGroupName && row.subjectName
+        ? `${row.classGroupName} · ${row.subjectName} · ${row.academicPeriodName}`
+        : (row.label ?? row.code ?? row.id)),
+  );
+}
 
 function display(value: unknown, type?: string) {
   if (value === null || value === undefined || value === "") return "—";
@@ -93,6 +104,15 @@ export function MasterList({
               : "Kamu memiliki akses untuk melihat data ini."}
           </p>
         </div>
+        {canManage && config.slug === "time-slots" && (
+          <LessonSlotGenerator
+            schoolId={schoolId}
+            years={
+              config.fields.find((field) => field.name === "academicYearId")
+                ?.options ?? []
+            }
+          />
+        )}
         {canManage && (
           <button
             className="button button-primary"
@@ -185,14 +205,14 @@ export function MasterList({
                         <div className="row-actions">
                           <button
                             className="icon-button"
-                            aria-label={`Edit ${String(row.name ?? row.label ?? row.code ?? row.id)}`}
+                            aria-label={`Edit ${recordLabel(row)}`}
                             onClick={() => setEditing(row)}
                           >
                             <Pencil size={16} />
                           </button>
                           <button
                             className="icon-button delete-button"
-                            aria-label={`Hapus ${String(row.name ?? row.label ?? row.code ?? row.id)}`}
+                            aria-label={`Hapus ${recordLabel(row)}`}
                             onClick={() => setDeleting(row)}
                           >
                             <Trash2 size={16} />
@@ -367,6 +387,45 @@ function MasterDialog({
           {config.fields.map((field) => {
             const fieldId = `master-${field.name}`;
             const error = state.fieldErrors?.[field.name];
+            if (
+              config.slug === "time-slots" &&
+              field.name === "endsAt" &&
+              values.kind === "LESSON"
+            ) {
+              const sameSlot =
+                row?.kind === "LESSON" &&
+                String(row.academicYearId) === values.academicYearId &&
+                String(row.startsAt).slice(0, 5) ===
+                  String(values.startsAt).slice(0, 5);
+              const duration = sameSlot
+                ? Number(row.durationMinutes)
+                : config.fields
+                    .find((item) => item.name === "academicYearId")
+                    ?.options?.find(
+                      (option) => option.value === values.academicYearId,
+                    )?.lessonDurationMinutes;
+              const end = sameSlot
+                ? String(row.endsAt).slice(0, 5)
+                : lessonEnd(String(values.startsAt), duration ?? 0);
+              return (
+                <label key={field.name} htmlFor={fieldId}>
+                  Jam selesai otomatis
+                  <input
+                    id={fieldId}
+                    type="time"
+                    readOnly
+                    value={end}
+                    aria-describedby={`${fieldId}-hint`}
+                  />
+                  <small className="master-field-hint" id={`${fieldId}-hint`}>
+                    {duration
+                      ? `1 JP = ${duration} menit.${!end && values.startsAt ? " Rentang harus selesai pada hari yang sama." : ""}`
+                      : "Pilih tahun ajaran dan jam mulai terlebih dahulu."}
+                  </small>
+                </label>
+              );
+            }
+
             if (field.type === "multiselect") {
               const selected = values[field.name] as string[];
               return (
@@ -547,9 +606,8 @@ function DeleteDialog({
     >
       <h2 id="delete-master-title">Hapus {config.singular}?</h2>
       <p className="dialog-description">
-        <strong>{String(row.name ?? row.label ?? row.code ?? row.id)}</strong>{" "}
-        akan dihapus dari daftar. Data yang sudah dipakai pada master atau
-        jadwal lain tidak bisa dihapus.
+        <strong>{recordLabel(row)}</strong> akan dihapus dari daftar. Data yang
+        sudah dipakai pada master atau jadwal lain tidak bisa dihapus.
       </p>
       <form action={action}>
         {state.message && (

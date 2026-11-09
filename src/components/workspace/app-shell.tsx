@@ -45,6 +45,11 @@ export function AppShell({
     { slug: "subjects", label: "Mata pelajaran", icon: BookOpen },
     { slug: "teachers", label: "Guru", icon: Users },
     { slug: "class-groups", label: "Kelas / rombel", icon: School2 },
+    {
+      slug: "class-subject-requirements",
+      label: "Kebutuhan mapel",
+      icon: BookOpen,
+    },
     { slug: "facilities", label: "Fasilitas", icon: Boxes },
     { slug: "rooms", label: "Ruangan", icon: Building2 },
     { slug: "time-slots", label: "Slot waktu", icon: Clock3 },

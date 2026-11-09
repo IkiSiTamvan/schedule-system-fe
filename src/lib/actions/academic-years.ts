@@ -28,7 +28,14 @@ export async function saveAcademicYear(
   const startsOn = String(formData.get("startsOn") ?? "");
   const endsOn = String(formData.get("endsOn") ?? "");
   const active = formData.get("active") === "on";
+  const lessonDurationMinutes = Number(formData.get("lessonDurationMinutes"));
   const fieldErrors: Record<string, string> = {};
+  if (
+    !Number.isInteger(lessonDurationMinutes) ||
+    lessonDurationMinutes < 1 ||
+    lessonDurationMinutes > 240
+  )
+    fieldErrors.lessonDurationMinutes = "Isi durasi 1 JP antara 1–240 menit.";
   if (!code || code.length > 20)
     fieldErrors.code = "Isi kode maksimal 20 karakter.";
   if (!name || name.length > 100)
@@ -46,7 +53,14 @@ export async function saveAcademicYear(
       `/v1/academic-years${id === null ? "" : `/${id}`}`,
       {
         method: id === null ? "POST" : "PUT",
-        body: JSON.stringify({ code, name, startsOn, endsOn, active }),
+        body: JSON.stringify({
+          code,
+          name,
+          startsOn,
+          endsOn,
+          active,
+          lessonDurationMinutes,
+        }),
       },
       schoolId,
     );
@@ -59,7 +73,7 @@ export async function saveAcademicYear(
           : undefined,
     };
   }
-  revalidatePath(`/schools/${schoolId}/academic-years`);
+  revalidatePath(`/schools/${schoolId}`, "layout");
   return {
     success: true,
     message:
