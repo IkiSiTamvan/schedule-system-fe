@@ -2,27 +2,39 @@ import type { MasterConfig } from "@/lib/masters/types";
 
 export const config: MasterConfig = {
   slug: "class-subject-requirements",
-  title: "Kebutuhan mapel per kelas",
+  title: "Kebutuhan mapel per tingkat",
   singular: "kebutuhan mapel",
   description:
-    "Tentukan target JP per minggu untuk setiap mata pelajaran di kelas dan semester yang dipilih. Pembagian pertemuan ditentukan saat menyusun jadwal.",
+    "Atur target JP per minggu untuk setiap mata pelajaran menurut tingkat, jurusan, dan semester. Semua rombel yang sesuai memakai target yang sama.",
   endpoint: "/v1/class-subject-requirements",
   fields: [
     {
-      name: "classGroupId",
-      label: "Kelas",
+      name: "gradeLevel",
+      label: "Tingkat",
       type: "select",
       required: true,
-      lookup: {
-        endpoint: "/v1/class-groups",
-        labelKeys: ["name", "majorName", "academicYearName"],
-      },
+      valueType: "number",
+      filter: true,
+      options: [
+        { value: "10", label: "X" },
+        { value: "11", label: "XI" },
+        { value: "12", label: "XII" },
+      ],
+    },
+    {
+      name: "majorId",
+      label: "Jurusan",
+      type: "select",
+      required: true,
+      filter: true,
+      lookup: { endpoint: "/v1/majors" },
     },
     {
       name: "academicPeriodId",
       label: "Semester",
       type: "select",
       required: true,
+      filter: true,
       lookup: {
         endpoint: "/v1/academic-periods",
         labelKeys: ["name", "academicYearName"],
@@ -53,7 +65,7 @@ export const config: MasterConfig = {
     },
   ],
   columns: [
-    { key: "classGroupName", label: "Kelas" },
+    { key: "gradeLevel", label: "Tingkat" },
     { key: "majorName", label: "Jurusan" },
     { key: "academicYearName", label: "Tahun ajaran" },
     { key: "academicPeriodName", label: "Semester" },

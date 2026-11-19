@@ -21,8 +21,8 @@ import type { MasterConfig, MasterRecord } from "@/lib/masters/types";
 function recordLabel(row: MasterRecord) {
   return String(
     row.name ??
-      (row.classGroupName && row.subjectName
-        ? `${row.classGroupName} · ${row.subjectName} · ${row.academicPeriodName}`
+      (row.gradeLevel && row.majorName && row.subjectName
+        ? `Tingkat ${row.gradeLevel} · ${row.majorName} · ${row.subjectName} · ${row.academicPeriodName}`
         : (row.label ?? row.code ?? row.id)),
   );
 }
