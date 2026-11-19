@@ -439,6 +439,26 @@
   height: 16px;
   accent-color: #3869e8;
 }
+.master-multiselect > .subject-picker-filters {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr));
+  padding: 0;
+  margin-bottom: 10px;
+  border: 0;
+  max-height: none;
+  overflow: visible;
+}
+.subject-picker-filters label {
+  display: grid;
+  gap: 4px;
+}
+.subject-picker-filters input,
+.subject-picker-filters select {
+  width: 100%;
+  height: auto;
+}
+.master-multiselect > [role="group"] + [role="group"] {
+  margin-top: 8px;
+}
 .master-prerequisite {
   display: flex;
   align-items: center;

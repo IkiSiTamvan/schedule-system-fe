@@ -21,11 +21,18 @@ export const config: MasterConfig = {
       required: true,
       maxLength: 150,
     },
-    { name: "category", label: "Kategori", type: "text", maxLength: 30 },
+    {
+      name: "majorIds",
+      label: "Jurusan",
+      type: "multiselect",
+      lookup: { endpoint: "/v1/majors" },
+      description:
+        "Boleh pilih beberapa jurusan. Kosongkan untuk mata pelajaran umum.",
+    },
   ],
   columns: [
     { key: "name", label: "Mata pelajaran" },
     { key: "code", label: "Kode" },
-    { key: "category", label: "Kategori" },
+    { key: "majorNames", label: "Jurusan", type: "list", emptyLabel: "Umum" },
   ],
 };

@@ -2,6 +2,7 @@ export type MasterOption = {
   value: string;
   label: string;
   lessonDurationMinutes?: number;
+  majorIds?: number[];
 };
 export type MasterField = {
   name: string;
@@ -24,6 +25,8 @@ export type MasterField = {
   defaultValue?: string | number | boolean;
   description?: string;
   options?: MasterOption[];
+  filterByMajor?: boolean;
+  majorOptions?: MasterOption[];
   lookup?: {
     endpoint: string;
     labelKey?: string;
@@ -41,6 +44,7 @@ export type MasterConfig = {
   columns: {
     key: string;
     label: string;
+    emptyLabel?: string;
     type?: "date" | "time" | "boolean" | "list";
   }[];
 };

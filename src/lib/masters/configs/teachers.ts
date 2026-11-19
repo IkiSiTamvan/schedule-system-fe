@@ -26,6 +26,7 @@ export const config: MasterConfig = {
       name: "subjectIds",
       label: "Mata pelajaran yang bisa diajar",
       type: "multiselect",
+      filterByMajor: true,
       lookup: { endpoint: "/v1/subjects", labelKeys: ["name", "code"] },
       description: "Pilih satu atau beberapa mata pelajaran.",
     },

@@ -31,6 +31,9 @@ async function lookupOptions(
         ...(typeof row.lessonDurationMinutes === "number"
           ? { lessonDurationMinutes: row.lessonDurationMinutes }
           : {}),
+        ...(Array.isArray(row.majorIds)
+          ? { majorIds: row.majorIds as number[] }
+          : {}),
         label: labelKeys
           ? labelKeys
               .map((key) => row[key])
@@ -89,20 +92,22 @@ export async function MasterPage({
     [data, fields] = await Promise.all([
       backend<MasterRecord[]>(`${config.endpoint}?${query}`, {}, school.id),
       Promise.all(
-        config.fields.map(async (field) =>
-          field.lookup
-            ? {
-                ...field,
-                options: await lookupOptions(
-                  field.lookup.endpoint,
-                  school.id,
-                  field.lookup.labelKey,
-                  field.lookup.valueKey,
-                  field.lookup.labelKeys,
-                ),
-              }
-            : field,
-        ),
+        config.fields.map(async (field) => {
+          if (!field.lookup) return field;
+          const [options, majorOptions] = await Promise.all([
+            lookupOptions(
+              field.lookup.endpoint,
+              school.id,
+              field.lookup.labelKey,
+              field.lookup.valueKey,
+              field.lookup.labelKeys,
+            ),
+            field.filterByMajor
+              ? lookupOptions("/v1/majors", school.id)
+              : undefined,
+          ]);
+          return { ...field, options, majorOptions };
+        }),
       ),
     ]);
   } catch (error) {

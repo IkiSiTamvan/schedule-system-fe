@@ -16,7 +16,11 @@ import {
   X,
 } from "lucide-react";
 import { saveMaster, deleteMaster } from "@/lib/actions/masters";
-import type { MasterConfig, MasterRecord } from "@/lib/masters/types";
+import type {
+  MasterConfig,
+  MasterField,
+  MasterRecord,
+} from "@/lib/masters/types";
 
 function recordLabel(row: MasterRecord) {
   return String(
@@ -27,7 +31,9 @@ function recordLabel(row: MasterRecord) {
   );
 }
 
-function display(value: unknown, type?: string) {
+function display(value: unknown, type?: string, emptyLabel?: string) {
+  if (emptyLabel && (value == null || (Array.isArray(value) && !value.length)))
+    return emptyLabel;
   if (value === null || value === undefined || value === "") return "—";
   if (type === "boolean") return value ? "Ya" : "Tidak";
   if (type === "date") {
@@ -196,6 +202,7 @@ export function MasterList({
                                   option.value === String(row[column.key]),
                               )?.label ?? row[column.key],
                             column.type,
+                            column.emptyLabel,
                           )
                         )}
                       </td>
@@ -313,6 +320,122 @@ export function MasterList({
   );
 }
 
+function MasterMultiselect({
+  field,
+  selected,
+  onChange,
+  error,
+}: {
+  field: MasterField;
+  selected: string[];
+  onChange: (selected: string[]) => void;
+  error?: string;
+}) {
+  const [search, setSearch] = useState("");
+  const [major, setMajor] = useState("");
+  const options = field.options ?? [];
+  const term = search.trim().toLocaleLowerCase("id-ID");
+  const selectedOptions = field.filterByMajor
+    ? options.filter((option) => selected.includes(option.value))
+    : [];
+  const matches = field.filterByMajor
+    ? options.filter((option) => {
+        if ((!term && !major) || selected.includes(option.value)) return false;
+        const matchesMajor =
+          major === "" ||
+          major === "all" ||
+          (major === "general"
+            ? !option.majorIds?.length
+            : option.majorIds?.includes(Number(major)));
+        return (
+          matchesMajor && option.label.toLocaleLowerCase("id-ID").includes(term)
+        );
+      })
+    : options;
+
+  function checkbox(option: (typeof options)[number]) {
+    return (
+      <label key={option.value}>
+        <input
+          type="checkbox"
+          name={field.name}
+          value={option.value}
+          checked={selected.includes(option.value)}
+          onChange={(event) =>
+            onChange(
+              event.target.checked
+                ? [...selected, option.value]
+                : selected.filter((value) => value !== option.value),
+            )
+          }
+        />
+        <span>{option.label}</span>
+      </label>
+    );
+  }
+
+  return (
+    <fieldset className="master-multiselect" key={field.name}>
+      <legend>{field.label}</legend>
+      {field.filterByMajor && (
+        <div className="subject-picker-filters">
+          <label>
+            Cari mapel
+            <input
+              type="search"
+              value={search}
+              onChange={(event) => setSearch(event.target.value)}
+              placeholder="Nama atau kode mapel"
+            />
+          </label>
+          <label>
+            Jurusan
+            <select
+              value={major}
+              onChange={(event) => setMajor(event.target.value)}
+            >
+              <option value="">Pilih filter</option>
+              <option value="all">Semua mapel</option>
+              <option value="general">Umum</option>
+              {field.majorOptions?.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </label>
+        </div>
+      )}
+      {selectedOptions.length > 0 && (
+        <div role="group" aria-label="Mapel yang dipilih">
+          <strong>Dipilih ({selectedOptions.length})</strong>
+          {selectedOptions.map(checkbox)}
+        </div>
+      )}
+      <div
+        role={field.filterByMajor ? "group" : undefined}
+        aria-label={field.filterByMajor ? "Hasil pencarian mapel" : undefined}
+      >
+        {matches.length > 0 ? (
+          matches.map(checkbox)
+        ) : (
+          <p>
+            {!options.length
+              ? "Belum ada pilihan. Kamu bisa melengkapi master ini nanti."
+              : !term && !major
+                ? "Cari nama atau kode mapel, atau pilih jurusan."
+                : "Tidak ada mapel lain yang cocok."}
+          </p>
+        )}
+      </div>
+      {field.description && (
+        <small className="master-field-hint">{field.description}</small>
+      )}
+      {error && <span className="field-error">{error}</span>}
+    </fieldset>
+  );
+}
+
 function MasterDialog({
   config,
   schoolId,
@@ -427,47 +550,14 @@ function MasterDialog({
             }
 
             if (field.type === "multiselect") {
-              const selected = values[field.name] as string[];
               return (
-                <fieldset className="master-multiselect" key={field.name}>
-                  <legend>{field.label}</legend>
-                  <div>
-                    {field.options?.length ? (
-                      field.options.map((option) => (
-                        <label key={option.value}>
-                          <input
-                            type="checkbox"
-                            name={field.name}
-                            value={option.value}
-                            checked={selected.includes(option.value)}
-                            onChange={(event) =>
-                              set(
-                                field.name,
-                                event.target.checked
-                                  ? [...selected, option.value]
-                                  : selected.filter(
-                                      (value) => value !== option.value,
-                                    ),
-                              )
-                            }
-                          />
-                          <span>{option.label}</span>
-                        </label>
-                      ))
-                    ) : (
-                      <p>
-                        Belum ada pilihan. Kamu bisa melengkapi master ini
-                        nanti.
-                      </p>
-                    )}
-                  </div>
-                  {field.description && (
-                    <small className="master-field-hint">
-                      {field.description}
-                    </small>
-                  )}
-                  {error && <span className="field-error">{error}</span>}
-                </fieldset>
+                <MasterMultiselect
+                  key={field.name}
+                  field={field}
+                  selected={values[field.name] as string[]}
+                  onChange={(selected) => set(field.name, selected)}
+                  error={error}
+                />
               );
             }
             if (field.type === "checkbox")
