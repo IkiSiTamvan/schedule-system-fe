@@ -11,6 +11,7 @@ import {
   LogOut,
   Menu,
   PanelLeftClose,
+  PanelLeftOpen,
   School as SchoolIcon,
   X,
   BookOpen,
@@ -37,6 +38,7 @@ export function AppShell({
   children: ReactNode;
 }) {
   const [open, setOpen] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const pathname = usePathname();
   const navigation = [
     { slug: "academic-years", label: "Tahun ajaran", icon: CalendarDays },
@@ -65,7 +67,9 @@ export function AppShell({
   const initials = user.username.slice(0, 2).toUpperCase();
   return (
     <div className="live-workspace">
-      <div className="academy-shell theme-minimal">
+      <div
+        className={`academy-shell theme-minimal${sidebarCollapsed ? " sidebar-collapsed" : ""}`}
+      >
         {open && (
           <button
             className="sidebar-backdrop"
@@ -73,7 +77,10 @@ export function AppShell({
             onClick={() => setOpen(false)}
           />
         )}
-        <aside className={`shell-sidebar ${open ? "sidebar-open" : ""}`}>
+        <aside
+          id="workspace-sidebar"
+          className={`shell-sidebar ${open ? "sidebar-open" : ""}`}
+        >
           <Link href="/schools" className="sidebar-brand">
             <GraduationCap size={28} strokeWidth={1.7} />
             <span>
@@ -144,14 +151,31 @@ export function AppShell({
           <header className="app-topbar">
             <div className="breadcrumbs">
               <button
+                type="button"
                 className="icon-button mobile-menu-toggle"
                 aria-label="Buka menu"
+                aria-controls="workspace-sidebar"
                 aria-expanded={open}
                 onClick={() => setOpen(true)}
               >
                 <Menu size={20} />
               </button>
-              <PanelLeftClose size={17} className="desktop-panel-icon" />
+              <button
+                type="button"
+                className="icon-button desktop-panel-icon"
+                aria-label={
+                  sidebarCollapsed ? "Tampilkan sidebar" : "Sembunyikan sidebar"
+                }
+                aria-controls="workspace-sidebar"
+                aria-expanded={!sidebarCollapsed}
+                onClick={() => setSidebarCollapsed((collapsed) => !collapsed)}
+              >
+                {sidebarCollapsed ? (
+                  <PanelLeftOpen size={17} aria-hidden="true" />
+                ) : (
+                  <PanelLeftClose size={17} aria-hidden="true" />
+                )}
+              </button>
               <Link href="/schools" className="breadcrumb-school">
                 Sekolah
               </Link>

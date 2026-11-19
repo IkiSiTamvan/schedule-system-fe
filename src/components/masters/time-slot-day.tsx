@@ -219,6 +219,11 @@ function DayEditor({
                 </button>
               )}
               <span className="slot-day-number">{slot.sequenceNumber}</span>
+              <span className="slot-day-time">
+                <span>{slot.startsAt.slice(0, 5) || "—"}</span>
+                <span>–</span>
+                <span>{slot.endsAt.slice(0, 5) || "—"}</span>
+              </span>
               <div className="slot-day-detail">
                 {canManage ? (
                   <input
@@ -238,9 +243,6 @@ function DayEditor({
                   {slot.kind === "LESSON" ? " · 1 JP" : ""}
                 </small>
               </div>
-              <span className="slot-day-time">
-                {slot.startsAt || "—"}–{slot.endsAt || "—"}
-              </span>
               <div className="slot-day-duration">
                 {slot.kind !== "LESSON" && canManage ? (
                   <input

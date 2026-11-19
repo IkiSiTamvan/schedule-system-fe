@@ -325,6 +325,14 @@
 .live-workspace .shell-main {
   min-width: 0;
 }
+@media (width > 760px) {
+  .live-workspace .academy-shell.sidebar-collapsed {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .live-workspace .sidebar-collapsed .shell-sidebar {
+    display: none;
+  }
+}
 .live-workspace .live-content {
   min-height: calc(100dvh - 72px);
   display: flex;
@@ -1017,12 +1025,13 @@ button:disabled {
   font: inherit;
 }
 .slot-day-list {
+  container-type: inline-size;
   display: grid;
   gap: 9px;
 }
 .slot-day-row {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template: "number time detail duration" / 3ch 7.5rem minmax(0, 1fr) 7rem;
   align-items: center;
   gap: 12px;
   padding: 12px;
@@ -1030,11 +1039,20 @@ button:disabled {
   border-radius: 9px;
   background: #fff;
 }
+.slot-day-row:has(.slot-grip) {
+  grid-template:
+    "grip number time detail duration actions" / auto 3ch 7.5rem minmax(0, 1fr)
+    7rem auto;
+}
+.slot-day-row .row-actions {
+  grid-area: actions;
+}
 .slot-day-row.is-dragging {
   border-color: #3869e8;
   background: #f3f6ff;
 }
 .slot-grip {
+  grid-area: grip;
   touch-action: none;
   cursor: grab;
 }
@@ -1042,12 +1060,13 @@ button:disabled {
   cursor: grabbing;
 }
 .slot-day-number {
-  width: 24px;
+  grid-area: number;
+  text-align: center;
   font-size: 12px;
   color: #687461;
 }
 .slot-day-detail {
-  flex: 1 1 130px;
+  grid-area: detail;
   min-width: 0;
   display: grid;
   gap: 4px;
@@ -1055,18 +1074,29 @@ button:disabled {
 .slot-day-detail input {
   width: 100%;
 }
+.slot-day-detail strong {
+  overflow-wrap: anywhere;
+}
 .slot-day-detail small,
 .slot-day-duration small {
   color: #687461;
   font-size: 11px;
 }
 .slot-day-time {
-  font-size: 13px;
+  grid-area: time;
+  display: grid;
+  grid-template-columns: 5.25ch auto 5.25ch;
+  justify-content: start;
+  column-gap: 3px;
+  font-size: 15px;
+  font-weight: 700;
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
 }
 .slot-day-duration {
+  grid-area: duration;
   display: flex;
+  justify-content: flex-end;
   align-items: center;
   gap: 5px;
   font-size: 13px;
@@ -1090,13 +1120,32 @@ button:disabled {
     align-items: flex-start;
     flex-direction: column;
   }
+}
+@container (max-width: 600px) {
   .slot-day-row {
+    grid-template:
+      "number time duration"
+      "detail detail detail" / 3ch minmax(0, 1fr) max-content;
     gap: 8px;
   }
-  .slot-day-time {
-    flex-basis: 100%;
+  .slot-day-row:has(.slot-grip) {
+    grid-template:
+      "grip number time duration"
+      "detail detail detail actions" / auto 3ch minmax(0, 1fr) max-content;
   }
-  .slot-day-row .row-actions {
-    margin-left: auto;
+  .slot-day-duration input {
+    width: 60px;
+  }
+}
+@container (max-width: 330px) {
+  .slot-day-row:has(.slot-grip) {
+    grid-template:
+      "grip number time time"
+      "detail detail detail detail"
+      "duration duration duration actions" / 30px 3ch minmax(0, 1fr)
+      max-content;
+  }
+  .slot-day-row:has(.slot-grip) .slot-day-duration {
+    justify-content: flex-start;
   }
 }
