@@ -2,10 +2,9 @@ import type { MasterConfig } from "@/lib/masters/types";
 
 export const config: MasterConfig = {
   slug: "class-groups",
-  title: "Kelas / rombel",
+  title: "Kelas",
   singular: "kelas",
-  description:
-    "Susun rombongan belajar sesuai jurusan dan tahun ajaran sekolah.",
+  description: "Kelola kelas sesuai jurusan dan tahun ajaran sekolah.",
   endpoint: "/v1/class-groups",
   fields: [
     {
@@ -55,7 +54,7 @@ export const config: MasterConfig = {
     },
     {
       name: "section",
-      label: "Rombel",
+      label: "Bagian kelas",
       type: "text",
       required: true,
       maxLength: 20,
@@ -76,7 +75,7 @@ export const config: MasterConfig = {
     { key: "majorName", label: "Jurusan" },
     { key: "gradeLevel", label: "Tingkat" },
     { key: "cohortYear", label: "Angkatan" },
-    { key: "section", label: "Rombel" },
+    { key: "section", label: "Bagian kelas" },
     { key: "capacity", label: "Kapasitas" },
   ],
 };

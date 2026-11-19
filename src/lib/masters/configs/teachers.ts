@@ -22,6 +22,13 @@ export const config: MasterConfig = {
       required: true,
       maxLength: 150,
     },
+    {
+      name: "subjectIds",
+      label: "Mata pelajaran yang bisa diajar",
+      type: "multiselect",
+      lookup: { endpoint: "/v1/subjects", labelKeys: ["name", "code"] },
+      description: "Pilih satu atau beberapa mata pelajaran.",
+    },
     { name: "email", label: "Email", type: "email", maxLength: 255 },
     { name: "phone", label: "Nomor telepon", type: "text", maxLength: 40 },
     {
@@ -41,6 +48,7 @@ export const config: MasterConfig = {
   columns: [
     { key: "name", label: "Nama guru" },
     { key: "employeeCode", label: "Kode pegawai" },
+    { key: "subjectNames", label: "Mata pelajaran", type: "list" },
     { key: "email", label: "Email" },
     { key: "phone", label: "Telepon" },
     { key: "active", label: "Aktif", type: "boolean" },

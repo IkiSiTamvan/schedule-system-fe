@@ -5,7 +5,7 @@ export const config: MasterConfig = {
   title: "Kebutuhan mapel per tingkat",
   singular: "kebutuhan mapel",
   description:
-    "Atur target JP per minggu untuk setiap mata pelajaran menurut tingkat, jurusan, dan semester. Semua rombel yang sesuai memakai target yang sama.",
+    "Atur target JP per minggu untuk setiap mata pelajaran menurut tingkat, jurusan, dan semester. Semua kelas yang sesuai memakai target yang sama.",
   endpoint: "/v1/class-subject-requirements",
   fields: [
     {
