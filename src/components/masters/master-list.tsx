@@ -183,7 +183,15 @@ export function MasterList({
                   <tr key={row.id}>
                     {config.columns.map((column) => (
                       <td key={column.key}>
-                        {column.key === "active" ? (
+                        {config.slug === "teachers" &&
+                        column.key === "external" &&
+                        row.external === true ? (
+                          <Link
+                            href={`/schools/${schoolId}/teacher-schedules?teacherId=${row.id}`}
+                          >
+                            {canManage ? "Atur jadwal" : "Lihat jadwal"}
+                          </Link>
+                        ) : column.key === "active" ? (
                           <span
                             className={`year-status ${row.active ? "is-active" : ""}`}
                           >

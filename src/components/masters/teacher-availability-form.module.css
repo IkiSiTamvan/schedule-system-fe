@@ -1,0 +1,53 @@
+.panel {
+  padding: 1rem;
+}
+
+.week {
+  display: grid;
+  gap: 0.85rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+}
+
+.day {
+  align-self: start;
+  min-width: 0;
+  padding: 0.6rem;
+  border: 1px solid currentColor;
+  border-color: color-mix(in srgb, currentColor 17%, transparent);
+  border-radius: 0.65rem;
+}
+
+.day legend {
+  padding: 0 0.3rem;
+  font-weight: 600;
+}
+
+.slot {
+  display: grid;
+  grid-template-columns: auto auto minmax(0, 1fr);
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.5rem 0.15rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.slot:has(input:enabled) {
+  cursor: pointer;
+}
+
+.slot input {
+  width: 1rem;
+  height: 1rem;
+}
+
+.label {
+  overflow-wrap: anywhere;
+}
+
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.85rem;
+  margin-top: 1rem;
+}

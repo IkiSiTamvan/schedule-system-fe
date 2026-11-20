@@ -46,6 +46,7 @@ export function AppShell({
     { slug: "majors", label: "Jurusan", icon: Network },
     { slug: "subjects", label: "Mata pelajaran", icon: BookOpen },
     { slug: "teachers", label: "Guru", icon: Users },
+    { slug: "teacher-schedules", label: "Jadwal Guru", icon: CalendarDays },
     { slug: "class-groups", label: "Kelas", icon: School2 },
     {
       slug: "class-subject-requirements",
