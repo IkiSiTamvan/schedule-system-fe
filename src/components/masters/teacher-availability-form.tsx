@@ -25,7 +25,15 @@ export function TeacherAvailabilityForm({
     saveTeacherAvailability.bind(null, schoolId, teacherId, periodId),
     { message: "" },
   );
-  const days = Map.groupBy(data.slots, (slot) => slot.dayOfWeek);
+  const days = new Map<number, TeacherAvailability["slots"]>();
+  for (const slot of data.slots) {
+    const day = days.get(slot.dayOfWeek);
+    if (day) {
+      day.push(slot);
+    } else {
+      days.set(slot.dayOfWeek, [slot]);
+    }
+  }
 
   return (
     <form action={save} className={`year-panel ${styles.panel}`}>
@@ -36,7 +44,34 @@ export function TeacherAvailabilityForm({
             disabled={!canManage || pending}
             className={styles.day}
           >
-            <legend>{slots[0].dayName}</legend>
+            <legend>
+              <label className={styles.dayToggle}>
+                <input
+                  type="checkbox"
+                  disabled={!canManage || pending}
+                  checked={slots.every((slot) => selected.has(slot.id))}
+                  ref={(input) => {
+                    if (input) {
+                      input.indeterminate =
+                        !input.checked &&
+                        slots.some((slot) => selected.has(slot.id));
+                    }
+                  }}
+                  onChange={(event) => {
+                    const checked = event.currentTarget.checked;
+                    setSelected((before) => {
+                      const next = new Set(before);
+                      for (const slot of slots) {
+                        if (checked) next.add(slot.id);
+                        else next.delete(slot.id);
+                      }
+                      return next;
+                    });
+                  }}
+                />
+                {slots[0].dayName}
+              </label>
+            </legend>
             {slots.map((slot) => (
               <label className={styles.slot} key={slot.id}>
                 <input
