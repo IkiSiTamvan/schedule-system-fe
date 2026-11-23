@@ -24,7 +24,7 @@ import {
   School2,
 } from "lucide-react";
 import type { CurrentUser, School } from "@/lib/api-types";
-import { roleLabel } from "@/lib/api-types";
+import { canManageYears, roleLabel } from "@/lib/api-types";
 import { logoutAction } from "@/lib/actions/auth";
 import { Avatar } from "@/components/ui/primitives";
 
@@ -48,6 +48,9 @@ export function AppShell({
     { slug: "teachers", label: "Guru", icon: Users },
     { slug: "teacher-schedules", label: "Jadwal Guru", icon: CalendarDays },
     { slug: "class-groups", label: "Kelas", icon: School2 },
+    ...(canManageYears(user, school.id)
+      ? [{ slug: "class-schedules", label: "Jadwal Kelas", icon: CalendarDays }]
+      : []),
     {
       slug: "class-subject-requirements",
       label: "Kebutuhan mapel",

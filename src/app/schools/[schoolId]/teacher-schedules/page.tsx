@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { TeacherAvailabilityForm } from "@/components/masters/teacher-availability-form";
-import { actionError, backend } from "@/lib/backend";
+import { actionError, backend, listBackend } from "@/lib/backend";
 import { getWorkspace } from "@/lib/workspace";
 import type { TeacherAvailability } from "@/lib/teacher-availability";
 
@@ -18,19 +18,6 @@ type Period = {
   startsOn: string;
   endsOn: string;
 };
-
-async function list<T>(endpoint: string, schoolId: number) {
-  const rows: T[] = [];
-  for (let page = 0; ; page++) {
-    const response = await backend<T[]>(
-      `${endpoint}?page=${page}&size=100`,
-      {},
-      schoolId,
-    );
-    rows.push(...response.result);
-    if (page + 1 >= (response.metaData?.pageCount ?? 1)) return rows;
-  }
-}
 
 export const metadata = { title: "Jadwal Guru — Academy" };
 
@@ -53,8 +40,8 @@ export default async function TeacherSchedulesPage({
   let periods: Period[];
   try {
     [teachers, periods] = await Promise.all([
-      list<Teacher>("/v1/teachers", school.id),
-      list<Period>("/v1/academic-periods", school.id),
+      listBackend<Teacher>("/v1/teachers", school.id),
+      listBackend<Period>("/v1/academic-periods", school.id),
     ]);
   } catch (error) {
     return (

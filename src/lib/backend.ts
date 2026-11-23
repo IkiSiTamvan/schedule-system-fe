@@ -60,6 +60,24 @@ export async function backend<T>(
   return payload as ApiResponse<T>;
 }
 
+export async function listBackend<T>(
+  endpoint: string,
+  schoolId: number,
+  filters: Record<string, string | number> = {},
+) {
+  const query = new URLSearchParams({ size: "100" });
+  for (const [name, value] of Object.entries(filters)) {
+    query.set(name, String(value));
+  }
+  const rows: T[] = [];
+  for (let page = 0; ; page++) {
+    query.set("page", String(page));
+    const response = await backend<T[]>(endpoint + "?" + query, {}, schoolId);
+    rows.push(...response.result);
+    if (page + 1 >= (response.metaData?.pageCount ?? 1)) return rows;
+  }
+}
+
 export function actionError(error: unknown) {
   if (error instanceof ApiError && error.status === 401)
     redirect("/login?reason=expired");

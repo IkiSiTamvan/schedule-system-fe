@@ -1,0 +1,260 @@
+.filters {
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+
+.draft {
+  padding: 0.85rem 1.25rem;
+}
+
+.draft summary,
+.requirementDetails summary {
+  cursor: pointer;
+  color: var(--app-accent, #3869e8);
+  font-weight: 650;
+  width: fit-content;
+}
+
+.draftFields {
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.draftFields label,
+.editorFields label {
+  display: grid;
+  gap: 0.35rem;
+  min-width: 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.draftFields label {
+  width: min(100%, 22rem);
+}
+
+.draftFields input,
+.editorFields select {
+  width: 100%;
+  min-height: 2.5rem;
+  border: 1px solid var(--app-line, #e5e9df);
+  border-radius: 0.45rem;
+  background: white;
+  color: var(--app-text, #253127);
+  padding: 0.45rem 0.65rem;
+  font: inherit;
+  font-weight: 400;
+}
+
+.board {
+  display: grid;
+  gap: 1.25rem;
+  min-width: 0;
+  margin-top: 1rem;
+}
+
+.board > section {
+  min-width: 0;
+}
+
+.progress {
+  padding: 1rem 1.25rem;
+}
+
+.progressHeader {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.6rem 1.5rem;
+}
+
+.progressHeader p {
+  margin-top: 0.35rem;
+  color: var(--app-muted, #61705d);
+  font-size: 0.88rem;
+}
+
+.progressHeader progress {
+  width: min(100%, 15rem);
+  accent-color: var(--app-accent, #3869e8);
+}
+
+.requirementDetails {
+  margin-top: 0.8rem;
+}
+
+.requirementDetails ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  gap: 0.4rem 1.25rem;
+  margin: 0.8rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.requirementDetails li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.1rem 0.5rem;
+  padding: 0.5rem 0;
+  border-top: 1px solid var(--app-line, #e5e9df);
+  font-size: 0.84rem;
+}
+
+.requirementDetails small,
+.editorFields small {
+  color: var(--app-muted, #61705d);
+  font-weight: 400;
+}
+
+.weekHeading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin: 0 0 0.65rem;
+}
+
+.editor {
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.8rem;
+}
+
+.editorFields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+  align-items: start;
+  gap: 0.75rem;
+  border: 0;
+  margin: 0.85rem 0;
+  padding: 0;
+  min-width: 0;
+}
+
+.editorActions {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.teacherAvailability {
+  font-size: 0.85rem;
+  color: var(--app-muted, #61705d);
+}
+
+.teacherAvailability > :not(:empty) {
+  margin: 0 0 0.65rem;
+}
+
+.teacherAvailability summary {
+  width: fit-content;
+  cursor: pointer;
+  color: var(--app-accent, #3869e8);
+}
+
+.teacherAvailability ul {
+  padding-inline-start: 1.25rem;
+  margin: 0.45rem 0 0;
+}
+
+.confirmation {
+  margin-bottom: 0.65rem;
+}
+
+.notice {
+  margin-bottom: 0.75rem;
+}
+
+.weekScroll {
+  overflow-x: auto;
+  border: 1px solid var(--app-line, #e5e9df);
+  border-radius: 0.6rem;
+  background: white;
+}
+
+.week {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(9.5rem, 1fr);
+  gap: 0.55rem;
+  padding: 0.65rem;
+}
+
+.day {
+  display: grid;
+  align-content: start;
+  grid-auto-rows: min-content;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.day h3 {
+  padding: 0.3rem 0.5rem;
+  margin: 0;
+  font-size: 0.92rem;
+}
+
+.slot {
+  display: grid;
+  align-content: start;
+  gap: 0.15rem;
+  min-height: 4.45rem;
+  padding: 0.4rem 0.5rem;
+  border: 1px solid var(--app-line, #e5e9df);
+  border-radius: 0.4rem;
+  font-size: 0.78rem;
+  overflow-wrap: anywhere;
+}
+
+.time {
+  color: var(--app-muted, #61705d);
+  font-size: 0.72rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.activity {
+  background: var(--app-bg, #f4f6f1);
+}
+
+.meeting {
+  background: color-mix(in srgb, var(--app-accent, #3869e8) 9%, white);
+  border-color: color-mix(in srgb, var(--app-accent, #3869e8) 28%, white);
+}
+
+.slotButton {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  width: 100%;
+  min-height: 2rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+}
+
+.slotButton svg {
+  flex-shrink: 0;
+}
+
+.lesson .slotButton {
+  color: var(--app-accent, #3869e8);
+}
+
+.meeting .slotButton {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.1rem;
+}
+
+.slot:has(.slotButton:hover) {
+  border-color: var(--app-accent, #3869e8);
+}
